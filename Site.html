@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Randomizador</title>
+  <style>
+    body {
+      text-align: center;
+      padding-top: 100px;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Randomizador</h1>
+  <p>Insira seu nome:</p>
+  <input type="text" id="nome">
+  <p>Insira um dado:</p>
+  <input type="text" id="entrada">
+  <button onclick="randomizar()">Randomizar</button>
+  <p id="resultado"></p>
+  <h2>Histórico de Randomizações</h2>
+  <ul id="historico"></ul>
+
+  <script>
+    var historicoNumeros = []; // Array para armazenar o histórico de números
+    var historicoNomes = []; // Array para armazenar o histórico de nomes
+
+    function randomizar() {
+      var nome = document.getElementById("nome").value;
+      var entrada = document.getElementById("entrada").value;
+      var dados = entrada.split(",");
+
+      if (dados.length > 0) {
+        var indiceAleatorio = Math.floor(Math.random() * dados.length);
+        var resultado = dados[indiceAleatorio].trim();
+        document.getElementById("resultado").textContent = resultado;
+
+        // Armazena o nome e o resultado no histórico
+        historicoNumeros.push(resultado);
+        historicoNomes.push(nome);
+
+        exibirHistorico(); // Atualiza a exibição do histórico
+      } else {
+        document.getElementById("resultado").textContent = "Insira dados separados por vírgula.";
+      }
+    }
+
+    function exibirHistorico() {
+      var historico = document.getElementById("historico");
+      historico.innerHTML = ""; // Limpa o conteúdo do histórico
+
+      for (var i = 0; i < historicoNumeros.length; i++) {
+        var itemHistorico = document.createElement("li");
+        itemHistorico.textContent = historicoNomes[i] + ": " + historicoNumeros[i];
+        historico.appendChild(itemHistorico);
+      }
+    }
+  </script>
+</body>
+</html>
